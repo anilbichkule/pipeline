@@ -3,7 +3,7 @@
   user: ansible
   become: yes
   connection: ssh
-
+  gather_facts: yes
   tasks:
     - name: creating new folder for cloning game of life
       action: file path=/mnt/app state=directory mode='0777'
