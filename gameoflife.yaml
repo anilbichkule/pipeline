@@ -1,0 +1,22 @@
+--- #creating war file on maven machine
+- hosts: maven
+  user: ansible
+  become: yes
+  connection: ssh
+
+  tasks:
+    - name: creating new folder for cloning game of life
+      action: file path=/mnt/app state=directory mode='0777'
+
+    - name: cloning repo
+      action: git repo=https://github.com/anilbichkule/game-of-life.git dest=/mnt/app
+
+    - name: changing directory for building project
+      command: chdir=/mnt/app/game-of-life
+
+    - name: run project using maven
+      command: mvn clean install
+
+    - name: fetching war file in the ansible server
+      action: fetch src=/mnt/app/game-of-life/gameoflife-web/target/gameoflife.war dest=/mnt/app
+
