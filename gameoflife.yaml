@@ -7,12 +7,14 @@
   tasks:
     - name: creating new folder for cloning game of life
       action: file path=/mnt/app state=directory mode='0777'
-
+    - name: installing git
+      action: yum pkg=git state=present
+      
     - name: cloning repo
       action: git repo=https://github.com/anilbichkule/game-of-life.git dest=/mnt/app
 
     - name: changing directory for building project
-      command: chdir=/mnt/app/game-of-life
+      command: cd /mnt/app/game-of-life
 
     - name: run project using maven
       command: mvn clean install
