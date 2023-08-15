@@ -1,6 +1,6 @@
 --- #creating war file on maven machine
 - hosts: maven
-  user: ansible
+  user: ec2-user
   become: yes
   connection: ssh
   gather_facts: yes
