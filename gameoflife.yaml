@@ -13,12 +13,23 @@
     - name: cloning repo
       action: git repo=https://github.com/anilbichkule/game-of-life.git dest=/mnt/app
 
-    - name: changing directory for building project
-      command: cd /mnt/app/game-of-life
+    - name: installing maven
+      get_url:
+        url: https://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo
+        dest: /etc/yum.repos.d
+
+
+    - name: install maven
+      yum:
+        name: maven
+        state: present
 
     - name: run project using maven
-      command: mvn clean install
+      command: " mvn clean install "
+      become: yes
+      args:
+        chdir: /mnt/app
 
     - name: fetching war file in the ansible server
-      action: fetch src=/mnt/app/game-of-life/gameoflife-web/target/gameoflife.war dest=/mnt/app/deployment
+      action: fetch src=/mnt/app/gameoflife-web/target/gameoflife.war dest=/mnt/app/deployment
 
